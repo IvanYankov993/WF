@@ -1,0 +1,28 @@
+GTAC_iPr_inp 
+
+successful run
+Based on Jamie/NMR_Stuff_GTAC_iPr_inp (or ivan/example)
+
+
+GTAC_Me_inp
+
+unsuccesful run
+Jamie/NMR_Stuff/GTAC_Me_reassignment/*_2
+too few restraitns
+
+
+GTAC__inp
+
+Based on Jamie/NMR_Stuff/GTAC_duplex_old/NAR*
+Contains:
+Filter.list
+pseudo.inp
+JW_GTAC_250ms_H2O.INT.1 mv GTAC_250ms_H2O.INT.1
+JW_GTAC_250ms_H2O.list
+GTAC_250ms.INT.1 mv GTAC_250ms.old
+GTAC__start.pdb
+GTAC__corma.pdb
+check.pdb ( not essential)
+wc.txt
+.lib and .frcmod deleted
+
