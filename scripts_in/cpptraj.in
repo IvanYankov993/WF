@@ -1,0 +1,15 @@
+parm /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_3/s11_anneal_solv.prmtop
+trajin /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_3/s11_prod_1ns_flip.mdcrd
+strip :Na+,WAT
+cluster s11_c  \
+ kmeans clusters 10 randompoint maxit 500 \
+   rms :1-25 \
+   sieve 10 random \
+ out cnumvtime.dat \
+  summary summary.dat \
+  info info.dat \
+  cpopvtime cpopvtime.agr normframe \
+  repout rep repfmt pdb \
+  singlerepout singlerep.nc singlerepfmt netcdf \
+  avgout avg avgfmt pdb
+ run

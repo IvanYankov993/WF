@@ -1,0 +1,14 @@
+gpdna 12-mer : initial minimization solvent + anion
+ &cntrl
+  imin   = 1,
+  maxcyc = 1000,
+  ncyc   = 500,
+  ntb    = 1,
+  ntr    = 1,
+  cut    = 10.0
+ /
+Hold the DNA fixed
+500.0
+RES 1 24
+END
+END

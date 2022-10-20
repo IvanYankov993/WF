@@ -1,0 +1,42 @@
+ simulated annealing protocol, 52 ps 
+                                                                               
+ &cntrl                                                                        
+    nstlim=520000, pencut=-0.001, nmropt=1,
+    ntpr=200, ntt=1, ntwx=200,
+    cut=999.0d0, ntb=0, vlimit=10,
+    igb = 1
+ /                                                                        
+ &ewald
+    eedmeth=5,
+ /
+#                                                                              
+#Simple simulated annealing algorithm:                                         
+#                                                                              
+#from steps 0 to 30000: heat the system to 1000K
+#from steps 30001-50000: re-cool to low temperatures with long tautp
+#from steps 50001-52000: final cooling with short tautp
+#                                                                              
+ &wt type='TEMP0', istep1=0,istep2=300000,value1=1.0,
+            value2=1000.,    /
+ &wt type='TEMP0', istep1=300001, istep2=500000, value1=1000.0,
+            value2=100.0,     /
+ &wt type='TEMP0', istep1=500001, istep2=520000, value1=100.0,
+            value2=0.0,     /
+                                                                               
+ &wt type='TAUTP', istep1=0,istep2=300000,value1=0.1,
+            value2=1.0,     /
+ &wt type='TAUTP', istep1=300001,istep2=500000,value1=4.0,
+            value2=4.0,     /
+ &wt type='TAUTP', istep1=500001,istep2=510000,value1=4.0,
+            value2=1.0,     /
+ &wt type='TAUTP', istep1=510001,istep2=520000,value1=0.1,
+            value2=0.05,    /
+                                                                               
+ &wt type='REST', istep1=0,istep2=250000,value1=0.1,                             
+            value2=1.0,  /                                                
+ &wt type='REST', istep1=250001,istep2=520000,value1=1.0,                         
+            value2=1.0,  /                                                  
+                                                                               
+ &wt type='END'  /
+LISTOUT=POUT                                                                   
+DISANG=GTAC_iPr_flip.rest
