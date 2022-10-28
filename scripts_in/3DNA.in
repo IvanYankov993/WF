@@ -1,5 +1,5 @@
-parm /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_2/s2_anneal_solv.prmtop
-trajin /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_2/s2_prod_1ns_flip.mdcrd
+parm /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_2/_anneal_solv.prmtop
+trajin /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_2/_prod_1ns_flip.mdcrd
 strip :Na+,WAT
 
 

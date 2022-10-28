@@ -39,4 +39,4 @@
                                                                                
  &wt type='END'  /
 LISTOUT=POUT                                                                                                                                     
-DISANG=/home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_3/MDprep/GTAC_iPr_corma.rest
+DISANG=/home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_0/MDprep/GTAC_iPr_corma.rest

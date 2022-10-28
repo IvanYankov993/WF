@@ -59,9 +59,27 @@ echo "Check inp = ${inp}" >${WFPATH}/NMR_MD_IY.log
 echo "Check {NamePA_PA} = ${NamePA_PA}" >${WFPATH}/NMR_MD_IY.log
 ###########################################################
 
+################### CHECK FOR AMBER #######################
+
+if command -v pmemd.cuda;
+then echo "pmemd.cuda exists. Running GPU accelerated AMBER CODE";
+AmberRun=pmemd.cuda
+
+else if command -v sander; then echo "sander exists. Running CPU AMBER CODE"; 
+AmberRun=sander
+
+else echo "Please, install Amber or load module Amber/Intel-21.0"; exit;
+fi
+fi
+
+
+
+
+
+
 
 #Export every variable so it can be used in following scripts
-export NameDNA NamePA NamePA_PA runN WFPATH scr inp 
+export NameDNA NamePA NamePA_PA runN WFPATH scr inp AmberRun
 
 #Check if functions (contained in library_NMR_WF_functions.sh) use the correcct variables, print (cat scripts)
 

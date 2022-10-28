@@ -38,11 +38,15 @@ for i in $listVar; do
 	echo $i
 	echo "Template${z}${i}.PARM" >> gnu_parallel_mardigras.txt
 	#./mardigras Template.PARM
+	if ! command -v man parallel:
+	then echo "sequential run"; ./mardigras Template${z}${i}.PARM; 
+	fi
 done
 done
 #done
-
-parallel -a gnu_parallel_mardigras.txt ./mardigras
+if command -v man parallel:
+then echo "parallel run"; parallel -a gnu_parallel_mardigras.txt ./mardigras;
+fi
 
 
 
