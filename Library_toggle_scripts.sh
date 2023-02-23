@@ -301,6 +301,7 @@ run0_analysis () {
 	cd "${WFPATH}/${DP}/Run_0/MDprep"
 	cwd=$(pwd)
 	echo $cwd
+	select_5
 	cd ..//
 	run_cwd=$(pwd)
 
