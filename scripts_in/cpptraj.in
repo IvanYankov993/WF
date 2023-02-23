@@ -1,7 +1,7 @@
-parm /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_3/_anneal_solv.prmtop
-trajin /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_3/_prod_1ns_flip.mdcrd
+parm /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_0/s2_anneal_solv.prmtop
+trajin /home/gabnmr/Documents/NMR_demo/GTAC_iPr/Run_0/s2_prod_1ns_flip.mdcrd
 strip :Na+,WAT
-cluster _c  \
+cluster s2_c  \
  kmeans clusters 10 randompoint maxit 500 \
    rms :1-25 \
    sieve 10 random \

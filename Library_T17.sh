@@ -34,6 +34,7 @@ do
         mkdir MDprep Mardi
     fi
 done
+cd ${WFPATH}
 export DP
 }
 
@@ -83,6 +84,61 @@ echo "IY CHECK ${arr0[@]}"
 #########################################################################################
 
 
+
+mardigras_calculations () {
+
+#here we need to calculate the final restrains write wait untill they are available
+	################## 
+
+    # Move into the Mardi working directory + define the path to move files later
+    # Mardigras requires the binaries and input files to be in one directory
+    
+    # First move all binaries, expect scripts and bash scripts relevant to the WF to 
+    # working direcotry in this case Run0/Mardi
+    
+    cd "${WFPATH}/${DP}/Run_0/Mardi"
+	c1wd=$(pwd)
+    cp $var_path* $c1wd
+
+    # move Mardigras relevant files from the inp directory and source directoryto c1wd
+
+	cp "${inp}${DP}_corma.pdb" $c1wd
+	cp ${inp}*.INT.1 $c1wd
+	cp "${inp}pseudo.inp" $c1wd
+	cp "${inp}filter.list" $c1wd 
+	cp "${scr}run.sh" $c1wd
+    cp "${inp}wc.txt" $c1wd
+
+    echo $c1wd $(ls) >> ${WFPATH}/NMR_MD_IY.log
+
+    # Mardigras calculations
+    # ./run_mardigra.sh
+    ./T1_run_corma.sh << EOF
+    ${DP}_corma
+    1
+    2
+EOF
+   
+    #### https://unix.stackexchange.com/questions/288765/using-a-bash-script-to-run-an-interactive-program
+    ###EOF statements
+    rm  $files
+
+    #Take removed restraints and filter out or add WC restraints at the bottom which will be available from the inp files WC.rest
+	cat wc.txt >> "${DP}_corma.rest"
+
+	################## restrained Annealing + Select 5 ##################
+
+	cd "${WFPATH}/${DP}/Run_0/MDprep"
+	cwd=$(pwd)
+	cp "${c1wd}/${DP}_corma.rest" $cwd
+    cd ${WFPATH}
+
+
+
+
+
+
+}
 
 
 

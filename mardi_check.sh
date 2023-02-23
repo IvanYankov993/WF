@@ -111,95 +111,15 @@ worktree    #request_input non
 
 
 mardigras_calculations
-
-confsampling
-
-annealing
-
-
+# Can i visualise the restraints from the rand file
+# can i compare rand distances to other runs
+# confsampling
+# annealing
 # cd "${WFPATH}/${DP}/Run_0/MDprep"
 # cwd=$(pwd)
-# echo $cwd
 # select_5
-
-production
-
-run0_analysis
-
+# production
 
 # singlerun
 # recycling
 # analysis
-# fin_str_and_analysis_rest_and_unrest
-
-
-# # date >> date.txt
-# mardigras_calculations
-# # date >> date.txt
-# # Can i visualise the restraints from the rand file
-# # can i compare rand distances to other runs
-# confsampling
-# annealing
-
-# cd "${WFPATH}/${DP}/Run_0/MDprep"
-# cwd=$(pwd)
-# echo $cwd
-# select_5
-
-# production
-
-# cd ..//
-# run_cwd=$(pwd)
-
-# # singlerun
-# # recycling
-# # analysis
-# # fin_str_and_analysis_rest_and_unrest
-
-# fin_str_unrest         # requires arr0[0-4] scr  
-#                 # produces 2 rep.c -> c
-#                 #NB! Revie script syntax error
-
-# tleap_start         
-# tleap_fin_str       # requires arr0[0-4] scr
-#                 # produces pmrtop rst7 files
-
-# md_fin_str_unrest
-# cp_cwd=$(pwd)
-
-# 3DNA_unrest
-# mkdir fin_s_unrest
-# mv s*c*.* fin_s_unrest 
-# mv cnumvtime.dat cpopvtime.agr info.dat singlerep.nc summary.dat mdinfo fin_s_unrest
-# mv ${arr0[0]} fin_analysis_s_unrest
-# mv ${arr0[1]} fin_analysis_s_unrest
-# mv ${arr0[2]} fin_analysis_s_unrest
-# mv ${arr0[3]} fin_analysis_s_unrest
-# mv ${arr0[4]} fin_analysis_s_unrest
-
-
-
-# # Restrained representative structuree
-# fin_str         # requires arr0[0-4] scr  
-#                 # produces 2 rep.c -> c
-#                 #NB! Revie script syntax error
-
-# tleap_start         
-# tleap_fin_str       # requires arr0[0-4] scr
-#                 # produces pmrtop rst7 files
-
-# md_fin_str          # requires arr0[0-4] scr
-# # 	            # produces minimised final.pdb final_corma.pdb  
-# cp_cwd=$(pwd)
-
-
-
-# 3DNA
-# mkdir fin_s_rest
-# mv s*c*.* fin_s_rest #s*c*_*
-# mv cnumvtime.dat cpopvtime.agr info.dat singlerep.nc summary.dat mdinfo fin_s_rest
-# mv ${arr0[0]} fin_analysis_s_rest
-# mv ${arr0[1]} fin_analysis_s_rest
-# mv ${arr0[2]} fin_analysis_s_rest
-# mv ${arr0[3]} fin_analysis_s_rest
-# mv ${arr0[4]} fin_analysis_s_rest

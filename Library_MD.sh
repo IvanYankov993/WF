@@ -56,6 +56,50 @@ annealMDrest () {
 
 #run production of 5 ns
 run_5ns_prod () {
+cwd2=$(pwd)
+cp ${scr}dna_md4.in $cwd2
+j=-1
+  for i in {0..4}
+  do
+    j=$((1+${j}))
+    echo ${j}
+    var_selected=$(echo "${arr0[${j}]}" | awk -F"_" '{print $1}')
+    #| awk -F"s" '{print $0}'
+    echo ${var_selected}
+    FILE=${var_selected}
+    FILE=${arr0[${j}]}
+    
+    #should be solvent minimisation
+    ${AmberRun} -O -i ${scr}dna_min1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_min1.out -c ${FILE}_anneal_solv_flip.rst7 -r ${FILE}_anneal_solv_min1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
+    
+    #should be heating up
+    ${AmberRun} -O -i ${scr}dna_md1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md1.out -c ${FILE}_anneal_solv_min1_flip.ncrst -r ${FILE}_anneal_solv_md1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
+    
+    #equilibration
+    #sed -i '$d' ${scr}dna_md2.in
+    #echo "DISANG=${cwd}/${DP}_corma.rest" >> ${scr}dna_md2.in
+    ${AmberRun} -O -i ${scr}dna_md2.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md2.out -c ${FILE}_anneal_solv_md1_flip.ncrst -r ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_anneal_solv_md2_flip.nc
+    
+    #production of 5ns - modify protocol to 5ns
+    echo  "FILE var ${FILE}"
+      
+    # sed -i '$d' ${scr}dna_md4.in
+    # echo "DISANG=${cwd}/${DP}_corma.rest" >> ${scr}dna_md4.in
+    # ${AmberRun} -O -i ${scr}dna_md4.in -o ${FILE}_prod_1ns_flip.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip.mdcrd
+    
+    sed -i '$d' dna_md4.in
+    echo "DISANG=${DP}_corma.rest" >> dna_md4.in
+    ${AmberRun} -O -i dna_md4.in -o ${FILE}_prod_1ns_flip.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip.mdcrd
+    
+    
+    
+    #production of 5ns - unrestraiendmd protocol to 5ns (switch off the restraines)
+#     ${AmberRun} -O -i dna_md4_unrest.in -o ${FILE}_prod_1ns_flip_unrest.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip_unrest.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip_unrest.mdcrd
+
+done
+}
+
+run_5ns_unrest_prod () {
 j=-1
   for i in {0..4}
   do
@@ -67,20 +111,21 @@ j=-1
     FILE=${var_selected}
     FILE=${arr0[${j}]}
     #should be solvent minimisation
-    ${AmberRun} -O -i ${scr}dna_min1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_min1.out -c ${FILE}_anneal_solv_flip.rst7 -r ${FILE}_anneal_solv_min1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
+#     ${AmberRun} -O -i ${scr}dna_min1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_min1.out -c ${FILE}_anneal_solv_flip.rst7 -r ${FILE}_anneal_solv_min1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
     #should be heating up
-    ${AmberRun} -O -i ${scr}dna_md1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md1.out -c ${FILE}_anneal_solv_min1_flip.ncrst -r ${FILE}_anneal_solv_md1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
+#     ${AmberRun} -O -i ${scr}dna_md1.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md1.out -c ${FILE}_anneal_solv_min1_flip.ncrst -r ${FILE}_anneal_solv_md1_flip.ncrst -ref ${FILE}_anneal_solv_flip.rst7
     #equilibration
     #sed -i '$d' ${scr}dna_md2.in
     #echo "DISANG=${cwd}/${DP}_corma.rest" >> ${scr}dna_md2.in
-    ${AmberRun} -O -i ${scr}dna_md2.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md2.out -c ${FILE}_anneal_solv_md1_flip.ncrst -r ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_anneal_solv_md2_flip.nc
+#     ${AmberRun} -O -i ${scr}dna_md2.in -p ${FILE}_anneal_solv.prmtop -o ${FILE}_anneal_solv_md2.out -c ${FILE}_anneal_solv_md1_flip.ncrst -r ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_anneal_solv_md2_flip.nc
+    
     #production of 5ns - modify protocol to 5ns
     echo  "FILE var ${FILE}"
-    sed -i '$d' ${scr}dna_md4.in
-    echo "DISANG=${cwd}/${DP}_corma.rest" >> ${scr}dna_md4.in
-    ${AmberRun} -O -i ${scr}dna_md4.in -o ${FILE}_prod_1ns_flip.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip.mdcrd
+#     sed -i '$d' ${scr}dna_md4.in
+#     echo "DISANG=${cwd}/${DP}_corma.rest" >> ${scr}dna_md4.in
+#     ${AmberRun} -O -i ${scr}dna_md4.in -o ${FILE}_prod_1ns_flip.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip.mdcrd
     #production of 5ns - unrestraiendmd protocol to 5ns (switch off the restraines)
-    #${AmberRun} -O -i dna_md4_unrest.in -o ${FILE}_prod_1ns_flip_unrest.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip_unrest.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip_unrest.mdcrd
+    ${AmberRun} -O -i ${scr}dna_md4_unrest.in -o ${FILE}_prod_1ns_flip_unrest.out -p ${FILE}_anneal_solv.prmtop -r ${FILE}_prod_1ns_flip_unrest.ncrst -c ${FILE}_anneal_solv_md2_flip.ncrst -x ${FILE}_prod_1ns_flip_unrest.mdcrd
 
 
      # to run using parallel generate each min 1 md1 md 2 md4 into a seperate file.txt 
@@ -88,7 +133,6 @@ j=-1
      # parallel -a file2.txt pmemd.cude (2) md 1 etc
 done
 }
-
 
 md_fin_str () {
      
@@ -117,7 +161,32 @@ md_fin_str () {
      done
 }
 
-
+md_fin_str_unrest () {
+     
+     j=-1
+     for i in {0..4}
+     do
+     j=$((1+${j}))
+     echo ${j}
+     var_selected=$(echo "${arr0[${j}]}" | awk -F"_" '{print $1}')
+     var_selected=${var_selected//$'\n'/}
+     FILE=${var_selected}
+     FILE=${arr0[${j}]}
+     echo ${scr}${var_selected}
+     #minimisation  
+     ${AmberRun} -O -i ${scr}dna_min3.in -c ${FILE}c1_ion_solv.rst7 -p ${FILE}c1_ion_solv.prmtop -o ${FILE}c1_min3_unrest.out -r ${FILE}c1_min3_unrest.ncrst -ref ${FILE}c1_ion_solv.rst7
+     ${AmberRun} -O -i ${scr}dna_min4.in -c ${FILE}c1_min3_unrest.ncrst -p ${FILE}c1_ion_solv.prmtop -o ${FILE}c1_min4_unrest.out -r ${FILE}c1_min4_unrest.ncrst
+     ${AmberRun} -O -i ${scr}dna_min3.in -c ${FILE}c2_ion_solv.rst7 -p ${FILE}c2_ion_solv.prmtop -o ${FILE}c2_min3_unrest.out -r ${FILE}c2_min3_unrest.ncrst -ref ${FILE}c2_ion_solv.rst7
+     ${AmberRun} -O -i ${scr}dna_min4.in -c ${FILE}c2_min3_unrest.ncrst -p ${FILE}c2_ion_solv.prmtop -o ${FILE}c2_min4_unrest.out -r ${FILE}c2_min4_unrest.ncrst
+     #final pdb
+     ambpdb -p ${FILE}c1_ion_solv.prmtop -c ${FILE}c1_min4_unrest.ncrst > ${FILE}c1_final_unrest.pdb
+     ambpdb -p ${FILE}c2_ion_solv.prmtop -c ${FILE}c2_min4_unrest.ncrst > ${FILE}c2_final_unrest.pdb
+     #strip waters and ions
+     
+     grep -v 'WAT' ${FILE}c1_final_unrest.pdb > ${FILE}c1_final_corma_unrest.pdb
+     sed -i '/Na+/d' ${FILE}c1_final_corma_unrest.pdb
+     done
+}
 
 min12md12_loop () {
 

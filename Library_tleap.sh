@@ -20,6 +20,15 @@ tleap_start () {
     echo loadoff ${inp}${NamePA_PA}.lib >> tleap_script.in
 }
 
+tleap_start_freeDNA () {
+    # ask for the tleap script - solvatin, lib and frcmod or cluster rst7 and solvating and rst7
+    x=tleap_script.in
+    echo source leaprc.gaff > tleap_script.in
+    echo source leaprc.DNA.bsc1 >> tleap_script.in
+    echo source leaprc.water.tip3p >> tleap_script.in
+}
+
+
 tleap_conf () {
     #tleap_start
     #requires inp for start pdb and DP shorthand for DNA_PA
